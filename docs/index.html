@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <link rel="stylesheet" href="custom.css">
+    <title>Yto-app</title>
+</head>
+<body>
+  <header>
+    <h1>Yto-app</h1>
+    <p>Ytojen seurantaan.</p>
+  </header>
+<dialog id="infoPopup">
+    <p>
+        Tällä sivulla voit seurata yto-opintojesi etenemistä.
+        Tiedot tallentuvat paikallisesti selaimeen.
+        Mitään tietoja ei välitetä muualle.
+    </p>
+
+    <button id="closePopup">Sulje</button>
+    <button id="dontShowAgain">Älä näytä jatkossa</button>
+</dialog>
+  <main>
+    <p></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Pakolliset kurssit</th>
+                <th>Arvosana</th>
+            </tr>
+        </thead>
+        <tbody id="mandatoryCourseTableBody"></tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>Valinnaiset kurssit</th>
+                <th>Arvosana</th>
+            </tr>
+        </thead>
+        <tbody id="electiveCourseTableBody"></tbody>
+    </table>
+  </main>
+
+  <footer>
+    <p>Tekijä: Jari Ahonen</p>
+  </footer>
+</body>
+</html>
+<script src="courses.js"></script>
+<script src="info.js"></script>

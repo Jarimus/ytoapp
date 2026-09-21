@@ -1,5 +1,3 @@
-
-
 function calculateTotals() {
     var totalMandatoryOsp = 0
     var completedMandatoryOsp = 0

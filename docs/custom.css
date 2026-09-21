@@ -2,6 +2,22 @@ table {
     margin: 30px auto;
 }
 
+.ospInputField {
+    width: 3rem;
+}
+
+body>header {
+  padding: 0 0 0 0;
+}
+
+body>header h1 {
+  margin: 0.5rem auto;
+}
+
+body>header>:only-child {
+  margin-block-start: 0;
+}
+
 [data-theme="light"] {
   /* Default (light) theme */
   --bg: #fff;

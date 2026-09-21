@@ -244,7 +244,7 @@ ELECTIVE_COURSES.forEach(course => {
     const courseCell = row.insertCell();
     const inputField = document.createElement("input");
     courseCell.appendChild(inputField);
-    inputField.placeholder = "Kirjoita kurssin nimi";
+    inputField.placeholder = "-";
     inputField.addEventListener("focusout", () => {
         course.name = inputField.value;
         localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
@@ -253,6 +253,7 @@ ELECTIVE_COURSES.forEach(course => {
     const ospCell = row.insertCell();
     const ospInput = document.createElement("input", type="number");
     ospInput.value = course.osp;
+    ospInput.className = "ospInputField";
     ospInput.addEventListener("focusout", () => {
         course.osp = Number(ospInput.value);
         localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));

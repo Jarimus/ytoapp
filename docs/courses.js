@@ -278,3 +278,14 @@ ELECTIVE_COURSES.forEach(course => {
     inputField.value = course.name;
     select.value = course.grade;
 });
+
+// Reset progress button
+const resetProgressButton = document.getElementById("resetProgressBtn");
+resetProgressButton.addEventListener("click", (e) => {
+    if (confirm("Nollataanko kaikki kurssitiedot?")) {
+        localStorage.removeItem(MANDATORY_COURSES_KEY);
+        localStorage.removeItem(ELECTIVE_COURSES_KEY);
+        calculateTotals();
+        location.reload();
+    }
+});

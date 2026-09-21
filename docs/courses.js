@@ -10,121 +10,141 @@ const MANDATORY_COURSES = JSON.parse(localStorage.getItem(MANDATORY_COURSES_KEY)
         "name": "Fysiikka",
         "id": "fy",
         "grade": "",
-        "category": CATEGORY_SCIENCES
+        "category": CATEGORY_SCIENCES,
+        "osp": 1
     },
     {
         "name": "Kemia",
         "id": "ke",
         "grade": "",
-        "category": CATEGORY_SCIENCES
+        "category": CATEGORY_SCIENCES,
+        "osp": 1
     },
     {
         "name": "MA1: Peruslaskutoimitukset",
         "id": "ma1",
         "grade": "",
-        "category": CATEGORY_SCIENCES
+        "category": CATEGORY_SCIENCES,
+        "osp": 1
     },
     {
         "name": "MA2: Geometria",
         "id": "ma2",
         "grade": "",
-        "category": CATEGORY_SCIENCES
+        "category": CATEGORY_SCIENCES,
+        "osp": 1
     },
     {
         "name": "MA3: Yhtälöt ja prosenttilaskenta",
         "id": "ma3",
         "grade": "",
-        "category": CATEGORY_SCIENCES
+        "category": CATEGORY_SCIENCES,
+        "osp": 1
     },
     {
         "name": "MA4: Talous ja tilastot",
         "id": "ma4",
         "grade": "",
-        "category": CATEGORY_SCIENCES
+        "category": CATEGORY_SCIENCES,
+        "osp": 1
     },
     {
         "name": "Digi 1",
         "id": "digi1",
         "grade": "",
-        "category": CATEGORY_COMMUNICATIONS
+        "category": CATEGORY_COMMUNICATIONS,
+        "osp": 1
     },
     {
         "name": "Digi 2",
         "id": "digi2",
         "grade": "",
-        "category": CATEGORY_COMMUNICATIONS
+        "category": CATEGORY_COMMUNICATIONS,
+        "osp": 1
     },
     {
         "name": "Englanti 1",
         "id": "en1",
         "grade": "",
-        "category": CATEGORY_COMMUNICATIONS
+        "category": CATEGORY_COMMUNICATIONS,
+        "osp": 1.5
     },
     {
         "name": "Englanti 2",
         "id": "en2",
         "grade": "",
-        "category": CATEGORY_COMMUNICATIONS
+        "category": CATEGORY_COMMUNICATIONS,
+        "osp": 1.5
     },
     {
         "name": "Ruotsi",
         "id": "ru",
         "grade": "",
-        "category": CATEGORY_COMMUNICATIONS
+        "category": CATEGORY_COMMUNICATIONS,
+        "osp": 1
     },
     {
         "name": "Taide ja luova ilmaisu",
         "id": "tli",
         "grade": "",
-        "category": CATEGORY_COMMUNICATIONS
+        "category": CATEGORY_COMMUNICATIONS,
+        "osp": 1
     },
     {
-        "name": "Äidinkieli 1",
+        "name": "Äidinkieli 1 / S2 1",
         "id": "ai1",
         "grade": "",
-        "category": CATEGORY_COMMUNICATIONS
+        "category": CATEGORY_COMMUNICATIONS,
+        "osp": 2
     },
     {
-        "name": "Äidinkieli 2",
+        "name": "Äidinkieli 2 / S2 2",
         "id": "ai2",
         "grade": "",
-        "category": CATEGORY_COMMUNICATIONS
+        "category": CATEGORY_COMMUNICATIONS,
+        "osp": 2
     },
     {
         "name": "Yhteiskunnassa ja kansalaisena toimiminen",
         "id": "yht1",
         "grade": "",
-        "category": CATEGORY_SOCIAL_STUDIES
+        "category": CATEGORY_SOCIAL_STUDIES,
+        "osp": 2
     },
     {
         "name": "Työelämässä toimiminen",
         "id": "yht2",
         "grade": "",
-        "category": CATEGORY_SOCIAL_STUDIES
+        "category": CATEGORY_SOCIAL_STUDIES,
+        "osp": 2
     },
     {
         "name": "Opiskelu- ja urasuunnitteluvalmiudet",
         "id": "yht3",
         "grade": "",
-        "category": CATEGORY_SOCIAL_STUDIES
+        "category": CATEGORY_SOCIAL_STUDIES,
+        "osp": 1
     },
     {
         "name": "Yrittäjyys ja yrittäjämäinen toiminta",
         "id": "yht4",
         "grade": "",
-        "category": CATEGORY_SOCIAL_STUDIES
+        "category": CATEGORY_SOCIAL_STUDIES,
+        "osp": 1
     },
     {
         "name": "Liikuna ja terveystieto sekä työkyvyn ja hyvinvoinnin edistäminen",
         "id": "yht5",
         "grade": "",
-        "category": CATEGORY_SOCIAL_STUDIES
+        "category": CATEGORY_SOCIAL_STUDIES,
+        "osp": 2
     },
     {
         "name": "Kestävän kehityksen edistäminen",
         "id": "yht6",
         "grade": "",
-        "category": CATEGORY_SOCIAL_STUDIES
+        "category": CATEGORY_SOCIAL_STUDIES,
+        "osp": 1
     }
 ];
 
@@ -133,31 +153,37 @@ const ELECTIVE_COURSES = JSON.parse(localStorage.getItem(ELECTIVE_COURSES_KEY)) 
         "name": "",
         "id": "elective1",
         "grade": "",
+        "osp": 1.5
     },
     {
         "name": "",
         "id": "elective2",
         "grade": "",
+        "osp": 1.5
     },
     {
         "name": "",
         "id": "elective3",
         "grade": "",
+        "osp": 1.5
     },
     {
         "name": "",
         "id": "elective4",
         "grade": "",
+        "osp": 1.5
     },
     {
         "name": "",
         "id": "elective5",
         "grade": "",
+        "osp": 1.5
     },
     {
         "name": "",
         "id": "elective6",
         "grade": "",
+        "osp": 1.5
     },
 ];
 
@@ -176,6 +202,7 @@ function addCourseToTable(tableID, course) {
     select.addEventListener("change", () => {
         course.grade = select.value;
         localStorage.setItem(MANDATORY_COURSES_KEY, JSON.stringify(MANDATORY_COURSES));
+        calculateTotals();
     });
     // Attach grades as options to the menu
     GRADES.forEach(grade => {
@@ -222,12 +249,23 @@ ELECTIVE_COURSES.forEach(course => {
         course.name = inputField.value;
         localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
     })
+    // Add cell for osp (default 1.5)
+    const ospCell = row.insertCell();
+    const ospInput = document.createElement("input", type="number");
+    ospInput.value = course.osp;
+    ospInput.addEventListener("focusout", () => {
+        course.osp = Number(ospInput.value);
+        localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
+        calculateTotals();
+    })
+    ospCell.appendChild(ospInput);
     // Add cell for course grade
     const gradeCell = row.insertCell();
     const select = document.createElement("select");
     select.addEventListener("change", () => {
         course.grade = select.value;
         localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
+        calculateTotals();
     });
     GRADES.forEach(grade => {
         const option = document.createElement("option");
@@ -236,7 +274,7 @@ ELECTIVE_COURSES.forEach(course => {
         select.appendChild(option);
     });
     gradeCell.appendChild(select);
-    // Load initial values for the course name and grade
+    // Load values for the course name and grade
     inputField.value = course.name;
     select.value = course.grade;
 });

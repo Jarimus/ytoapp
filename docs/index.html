@@ -13,18 +13,20 @@
     <h1>Yto-app</h1>
     <p>Ytojen seurantaan.</p>
   </header>
-<dialog id="infoPopup">
-    <p>
-        Tällä sivulla voit seurata yto-opintojesi etenemistä.
-        Tiedot tallentuvat paikallisesti selaimeen.
-        Mitään tietoja ei välitetä muualle.
-    </p>
-
-    <button id="closePopup">Sulje</button>
-    <button id="dontShowAgain">Älä näytä jatkossa</button>
-</dialog>
   <main>
-    <p></p>
+      <dialog id="infoPopup">
+      <p>
+          Tällä sivulla voit seurata yto-opintojesi etenemistä.
+          Tiedot tallentuvat paikallisesti selaimeen.
+            Mitään tietoja ei välitetä muualle.
+        </p>
+    
+        <button id="closePopup">Sulje</button>
+        <button id="dontShowAgain">Älä näytä jatkossa</button>
+    </dialog>
+
+    <p id="mandatorySummary"></p>
+    <p id="electiveSummary"></p>
 
     <details>
         <summary>Viestintä ja vuorovaikutus</summary>
@@ -71,6 +73,7 @@
             <thead>
                 <tr>
                     <th>Kurssin nimi</th>
+                    <th>Osp</th>
                     <th>Arvosana</th>
                 </tr>
             </thead>
@@ -86,3 +89,4 @@
 </html>
 <script src="courses.js"></script>
 <script src="info.js"></script>
+<script src="summary.js"></script>

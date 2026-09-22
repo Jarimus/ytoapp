@@ -17,5 +17,3 @@ function calculateTotals() {
     electiveSummary = document.getElementById("electiveSummary");
     electiveSummary.textContent = `Valinnaisia suoritettu: ${completedElectiveOsp} / 9 osp`;
 }
-
-calculateTotals();

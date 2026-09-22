@@ -133,7 +133,7 @@ const MANDATORY_COURSES = JSON.parse(localStorage.getItem(MANDATORY_COURSES_KEY)
         "osp": 1
     },
     {
-        "name": "Liikuna ja terveystieto sekä työkyvyn ja hyvinvoinnin edistäminen",
+        "name": "Liikunta ja terveystieto sekä työkyvyn ja hyvinvoinnin edistäminen",
         "id": "yht5",
         "grade": "",
         "category": CATEGORY_SOCIAL_STUDIES,
@@ -216,77 +216,80 @@ function addCourseToTable(tableID, course) {
     select.value = course.grade;
 }
 
-MANDATORY_COURSES.forEach(course => {
+function populateTables() {
+    MANDATORY_COURSES.forEach(course => {
     switch (course.category) {
         case CATEGORY_SCIENCES:
             addCourseToTable("sciencesTable", course)
             break;
-    
-        case CATEGORY_COMMUNICATIONS:
-            addCourseToTable("communicationsTable", course)
+            
+            case CATEGORY_COMMUNICATIONS:
+                addCourseToTable("communicationsTable", course)
             break;
-
+            
         case CATEGORY_SOCIAL_STUDIES:
             addCourseToTable("socialStudiesTable", course)
             break;
-
-        default:
-            break;
-    }
-});
-
-const electiveCourseTable = document.getElementById("electiveCourseTableBody");
-
-ELECTIVE_COURSES.forEach(course => {
-    // Add row
-    const row = electiveCourseTable.insertRow();
-    // Add cell for course name
-    const courseCell = row.insertCell();
-    const inputField = document.createElement("input");
-    courseCell.appendChild(inputField);
-    inputField.placeholder = "-";
-    inputField.addEventListener("focusout", () => {
-        course.name = inputField.value;
-        localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
-    })
-    // Add cell for osp (default 1.5)
-    const ospCell = row.insertCell();
-    const ospInput = document.createElement("input", type="number");
-    ospInput.value = course.osp;
-    ospInput.className = "ospInputField";
-    ospInput.addEventListener("focusout", () => {
-        course.osp = Number(ospInput.value);
-        localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
-        calculateTotals();
-    })
-    ospCell.appendChild(ospInput);
-    // Add cell for course grade
-    const gradeCell = row.insertCell();
-    const select = document.createElement("select");
-    select.addEventListener("change", () => {
-        course.grade = select.value;
-        localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
-        calculateTotals();
+            
+            default:
+                break;
+            }
     });
-    GRADES.forEach(grade => {
-        const option = document.createElement("option");
-        option.value = grade;
-        option.textContent = grade;
-        select.appendChild(option);
+        
+    const electiveCourseTable = document.getElementById("electiveCourseTableBody");
+    ELECTIVE_COURSES.forEach(course => {
+        // Add row
+        const row = electiveCourseTable.insertRow();
+        // Add cell for course name
+        const courseCell = row.insertCell();
+        const inputField = document.createElement("input");
+        courseCell.appendChild(inputField);
+        inputField.placeholder = "-";
+        inputField.addEventListener("focusout", () => {
+            course.name = inputField.value;
+            localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
+        })
+        // Add cell for osp (default 1.5)
+        const ospCell = row.insertCell();
+        const ospInput = document.createElement("input", type="number");
+        ospInput.value = course.osp;
+        ospInput.className = "ospInputField";
+        ospInput.addEventListener("focusout", () => {
+            course.osp = Number(ospInput.value);
+            localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
+            calculateTotals();
+        })
+        ospCell.appendChild(ospInput);
+        // Add cell for course grade
+        const gradeCell = row.insertCell();
+        const select = document.createElement("select");
+        select.addEventListener("change", () => {
+            course.grade = select.value;
+            localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
+            calculateTotals();
+        });
+        GRADES.forEach(grade => {
+            const option = document.createElement("option");
+            option.value = grade;
+            option.textContent = grade;
+            select.appendChild(option);
+        });
+        gradeCell.appendChild(select);
+        // Load values for the course name and grade
+        inputField.value = course.name;
+        select.value = course.grade;
     });
-    gradeCell.appendChild(select);
-    // Load values for the course name and grade
-    inputField.value = course.name;
-    select.value = course.grade;
-});
+   
+}
 
-// Reset progress button
-const resetProgressButton = document.getElementById("resetProgressBtn");
-resetProgressButton.addEventListener("click", (e) => {
-    if (confirm("Nollataanko kaikki kurssitiedot?")) {
-        localStorage.removeItem(MANDATORY_COURSES_KEY);
-        localStorage.removeItem(ELECTIVE_COURSES_KEY);
-        calculateTotals();
-        location.reload();
-    }
-});
+function configureResetButton() {
+    const resetProgressButton = document.getElementById("resetProgressBtn");
+    resetProgressButton.addEventListener("click", (e) => {
+        if (confirm("Nollataanko kaikki kurssitiedot?")) {
+            localStorage.removeItem(MANDATORY_COURSES_KEY);
+            localStorage.removeItem(ELECTIVE_COURSES_KEY);
+            calculateTotals();
+            location.reload();
+        }
+    });
+}

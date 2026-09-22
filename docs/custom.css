@@ -2,8 +2,8 @@ table {
     margin: 30px auto;
 }
 
-.ospInputField {
-    width: 3rem;
+.ospSelect {
+  width: auto;
 }
 
 body>header {

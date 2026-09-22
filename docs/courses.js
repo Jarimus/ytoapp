@@ -252,6 +252,7 @@ function populateTables() {
         // Add cell for osp (default 1.5)
         const ospCell = row.insertCell();
         const ospSelect = document.createElement("select");
+        ospSelect.classList.add('ospSelect');
         [1, 1.5, 3].forEach(osp => {
             const option = document.createElement("option");
             option.value = osp;

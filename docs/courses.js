@@ -251,15 +251,23 @@ function populateTables() {
         })
         // Add cell for osp (default 1.5)
         const ospCell = row.insertCell();
-        const ospInput = document.createElement("input", type="number");
-        ospInput.value = course.osp;
-        ospInput.className = "ospInputField";
-        ospInput.addEventListener("focusout", () => {
-            course.osp = Number(ospInput.value);
+        const ospSelect = document.createElement("select");
+        [1, 1.5, 3].forEach(osp => {
+            const option = document.createElement("option");
+            option.value = osp;
+            option.textContent = osp;
+            if (osp === 1.5) {
+                option.selected = "selected";
+            }
+            ospSelect.appendChild(option);
+
+        })
+        ospCell.addEventListener("change", () => {
+            course.osp = ospSelect.value;
             localStorage.setItem(ELECTIVE_COURSES_KEY, JSON.stringify(ELECTIVE_COURSES));
             calculateTotals();
         })
-        ospCell.appendChild(ospInput);
+        ospCell.appendChild(ospSelect);
         // Add cell for course grade
         const gradeCell = row.insertCell();
         const select = document.createElement("select");

@@ -3,7 +3,7 @@ const CATEGORY_SCIENCES = "sciences";
 const CATEGORY_SOCIAL_STUDIES = "social_studies";
 const MANDATORY_COURSES_KEY = "mandatory";
 const ELECTIVE_COURSES_KEY = "elective"
-const GRADES = ["", "T1", "T2", "H3", "H4", "K5"];
+const GRADES = ["", "Palautettu", "Valmis", "T1", "T2", "H3", "H4", "K5"];
 
 const MANDATORY_COURSES = JSON.parse(localStorage.getItem(MANDATORY_COURSES_KEY)) ?? [
     {
